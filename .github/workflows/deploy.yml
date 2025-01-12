@@ -23,11 +23,11 @@ jobs:
 
         - name: "Setup Node.js environment"
           uses: actions/setup-node@v4.1.0
-          with:
+              with:
           # Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.
-          node-version: "lts/hydrogen"
+              node-version: 18.x
           # File containing the version Spec of the version to use.  Examples: package.json, .nvmrc, .node-version, .tool-versions.
-          node-version-file: ".nvmrc"
+              node-version-file: .nvmrc
 
         - name: executing remote ssh commands using password
           uses: appleboy/ssh-action@v1.2.0
