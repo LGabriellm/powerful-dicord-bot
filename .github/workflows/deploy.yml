@@ -1,0 +1,42 @@
+name: 'Deploy to vps'
+on:
+    push:
+        branches:
+        - main
+jobs:
+    build_deploy:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: 'Checkout'
+          uses: actions/checkout@v4
+
+        - name: "copy file via ssh to vps"
+          uses: appleboy/scp-action@v0.1.7
+          with:
+              host: ${{ secrets.HOST }}
+              username: ${{ secrets.USERNAME }}
+              password: ${{ secrets.PASSWORD }}
+              port: ${{ secrets.PORT }}
+              source: "."
+              target: "/root"
+
+        - name: "Setup Node.js environment"
+          uses: actions/setup-node@v4.1.0
+          with:
+          # Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.
+          node-version: "lts/hydrogen"
+          # File containing the version Spec of the version to use.  Examples: package.json, .nvmrc, .node-version, .tool-versions.
+          node-version-file: ".nvmrc"
+
+        - name: executing remote ssh commands using password
+          uses: appleboy/ssh-action@v1.2.0
+          with:
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USERNAME }}
+            password: ${{ secrets.PASSWORD }}
+            port: ${{ secrets.PORT }}
+            script: |
+                cd /root
+                npm install
+                npm start
