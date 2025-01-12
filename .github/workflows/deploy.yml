@@ -19,7 +19,7 @@ jobs:
               password: ${{ secrets.PASSWORD }}
               port: ${{ secrets.PORT }}
               source: "."
-              target: "/root"
+              target: "/root/bot_discord"
 
         - name: "Setup Node.js environment"
           uses: actions/setup-node@v4.1.0
@@ -37,6 +37,6 @@ jobs:
             password: ${{ secrets.PASSWORD }}
             port: ${{ secrets.PORT }}
             script: |
-                cd /root
+                cd /root/bot_discord
                 npm install
                 npm start
